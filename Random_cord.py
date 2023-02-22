@@ -2,7 +2,7 @@ from scamp import *
 from numpy import random
 from Setting import *
 import math
-
+from Setting_change import *
 def random_cord(instrument, octave=3):
     global cords,cord_prob,cord_durations,cord_duration_prob
     cords = [[(12*octave+x) for x in row] for row in cords]
@@ -21,9 +21,14 @@ def random_cord(instrument, octave=3):
         else:
             wait(duration)
 
+def set_scale(new_key):
+    global key,cords,notes
+    key,cords,notes = change_scale(cords,notes,key,new_key)
+
 if __name__=="__main__":
     random.seed(152)
     session = Session(tempo=95)
+    set_scale('C#')
     # instrument1 = session.new_part("Guitar Nylon X")
     instrument = session.new_midi_part("Guitar Nylon X",1)
     random_cord(instrument,2)
